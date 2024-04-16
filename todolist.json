@@ -1,0 +1,107 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Todolist RESTful API",
+    "description": "OpenAPI untuk todolist",
+    "version": "1",
+    "contact": {
+      "name": "ayam goreng rendah lemak",
+      "email": "ayam@gmail.com",
+      "url": "https://www.ayamgoren.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://{environment}.todolist.com",
+      "description": "Development server todolist",
+      "variables": {
+        "environment": {
+          "default": "development",
+          "description": "Development environment",
+          "enum": ["development", "production", "prod"]
+        }
+      }
+    }
+  ],
+  "externalDocs": {
+    "description": "Find out more about my todolist app",
+    "url": "https://www.ayamgoren.com"
+  },
+  "paths": {
+    "/todoslist": {
+      "get": {
+        "summary": "get all todoList",
+        "description": "hanya mengembalikan todolist yang aktif",
+        "responses": {},
+        "parameters": [
+          {
+            "name": "include_done",
+            "description": "include done todolist in the result",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": true,
+              "nullable": true
+            }
+          },
+          {
+            "name": "name",
+            "description": "search todolist by name",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": false,
+              "maxLength": 100,
+              "minLength": 1
+            }
+          }
+        ]
+      },
+      "post": {
+        "summary": "create new todoList",
+        "description": "membuat todolist baru",
+        "responses": {}
+      }
+    },
+    "/todolist/{id}": {
+      "delete": {
+        "summary": "delete todoList",
+        "description": "menghapus todolist",
+        "responses": {},
+        "parameters": [
+          {
+            "name": "todoListId",
+            "description": "todoList Id for Deleted",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      },
+      "put": {
+        "summary": "update todoList",
+        "description": "mengupdate todolist",
+        "responses": {},
+        "parameters": [
+          {
+            "name": "todoListId",
+            "description": "todoList Id for Update",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    }
+  }
+}
