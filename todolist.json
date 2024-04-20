@@ -36,7 +36,57 @@
       "get": {
         "summary": "get all todoList",
         "description": "hanya mengembalikan todolist yang aktif",
-        "responses": {},
+        "responses": {
+          "200": {
+            "description": "get all todoList",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "priority": {
+                        "type": "number",
+                        "format": "int32"
+                      },
+                      "tags": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "success": {
+                    "description": "success get all todoList",
+                    "value": [
+                      {
+                        "id": "1",
+                        "name": "ayam goreng rendah lemak",
+                        "priority": 1,
+                        "tags": ["ayam", "goreng", "rendah", "lemak"]
+                      },
+                      {
+                        "id": "2",
+                        "name": "malingkingkong",
+                        "priority": 1,
+                        "tags": ["maling", "kingkong"]
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
         "parameters": [
           {
             "name": "include_done",
@@ -59,6 +109,16 @@
               "nullable": false,
               "maxLength": 100,
               "minLength": 1
+            },
+            "examples": {
+              "name": {
+                "description": "example name ayam goreng",
+                "value": "ayam goreng"
+              },
+              "jun": {
+                "description": "jiahhhh",
+                "value": "malingkingkong"
+              }
             }
           }
         ]
@@ -66,14 +126,124 @@
       "post": {
         "summary": "create new todoList",
         "description": "membuat todolist baru",
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "success create new todoList",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "priority": {
+                      "type": "number",
+                      "format": "int32"
+                    },
+                    "tags": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "ayam": {
+                    "description": "ayam goreng rendah lemak",
+                    "value": {
+                      "id": "1",
+                      "name": "ayam goreng rendah lemak",
+                      "priority": 1,
+                      "tags": ["ayam", "goreng", "rendah", "lemak"]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "examples": {
+                "name": {
+                  "value": {
+                    "name": "ayam goreng rendah lemak",
+                    "tags": ["ayam", "goreng", "rendah", "lemak"],
+                    "priority": 1
+                  }
+                },
+                "jun": {
+                  "value": {
+                    "name": "malingkingkong",
+                    "tags": ["maling", "kingkong"],
+                    "priority": 2
+                  }
+                }
+              },
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "required": true,
+                    "minLength": 1
+                  },
+                  "tags": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "priority": {
+                    "type": "integer",
+                    "format": "int32",
+                    "required": true,
+                    "default": 1
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/todolist/{id}": {
       "delete": {
         "summary": "delete todoList",
         "description": "menghapus todolist",
-        "responses": {},
+        "responses": {
+          "200": {
+            "description": "success delete todoList",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    }
+                  }
+                },
+                "examples":{
+                  "success": {
+                    "description": "success delete todoList",
+                    "value": {
+                      "success": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "parameters": [
           {
             "name": "todoListId",
@@ -89,7 +259,93 @@
       "put": {
         "summary": "update todoList",
         "description": "mengupdate todolist",
-        "responses": {},
+        "responses": {
+          "200": {
+            "description": "success update new todoList",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "priority": {
+                      "type": "number",
+                      "format": "int32"
+                    },
+                    "tags": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "ayam": {
+                    "description": "ayam goreng rendah lemak",
+                    "value": {
+                      "id": "1",
+                      "name": "ayam goreng rendah lemak",
+                      "priority": 1,
+                      "tags": ["ayam", "goreng", "rendah", "lemak"]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "examples": {
+                "name": {
+                  "value": {
+                    "name": "ayam goreng rendah lemak",
+                    "tags": ["ayam", "goreng", "rendah", "lemak"],
+                    "priority": 1
+                  }
+                },
+                "jun": {
+                  "value": {
+                    "name": "malingkingkong",
+                    "tags": ["maling", "kingkong"],
+                    "priority": 2
+                  }
+                }
+              },
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "required": true
+                  },
+                  "tags": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "priority": {
+                    "type": "integer",
+                    "format": "int32",
+                    "default": 1,
+                    "required": true
+                  }
+                }
+              }
+            }
+          }
+        },
         "parameters": [
           {
             "name": "todoListId",
@@ -98,6 +354,16 @@
             "required": true,
             "schema": {
               "type": "string"
+            },
+            "examples": {
+              "todoListId": {
+                "description": "example todoListId 5f9b3b5b5b5b5b5b5b5b5b5b",
+                "value": "5f9b3b5b5b5b5b5b5b5b5b5b"
+              },
+              "jun": {
+                "description": "jiahhhh",
+                "value": "5f9b3b5b5b5b5b5b5b5b5b5b"
+              }
             }
           }
         ]
