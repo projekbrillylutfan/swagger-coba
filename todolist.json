@@ -34,6 +34,12 @@
   "paths": {
     "/todoslist": {
       "get": {
+        "security": [
+          {
+            "TodoListAuth": []
+          }
+        ],
+        "tags": ["Todolist"],
         "summary": "get all todoList",
         "description": "hanya mengembalikan todolist yang aktif",
         "responses": {
@@ -124,6 +130,12 @@
         ]
       },
       "post": {
+        "security": [
+          {
+            "TodoListAuth": []
+          }
+        ],
+        "tags": ["Todolist"],
         "summary": "create new todoList",
         "description": "membuat todolist baru",
         "responses": {
@@ -217,6 +229,12 @@
     },
     "/todolist/{id}": {
       "delete": {
+        "security": [
+          {
+            "TodoListAuth": []
+          }
+        ],
+        "tags": ["Todolist"],
         "summary": "delete todoList",
         "description": "menghapus todolist",
         "responses": {
@@ -232,7 +250,7 @@
                     }
                   }
                 },
-                "examples":{
+                "examples": {
                   "success": {
                     "description": "success delete todoList",
                     "value": {
@@ -246,17 +264,17 @@
         },
         "parameters": [
           {
-            "name": "todoListId",
-            "description": "todoList Id for Deleted",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "$ref": "#/components/parameters/todoListId"
           }
         ]
       },
       "put": {
+        "security": [
+          {
+            "TodoListAuth": []
+          }
+        ],
+        "tags": ["Todolist"],
         "summary": "update todoList",
         "description": "mengupdate todolist",
         "responses": {
@@ -265,25 +283,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "id": {
-                      "type": "string"
-                    },
-                    "name": {
-                      "type": "string"
-                    },
-                    "priority": {
-                      "type": "number",
-                      "format": "int32"
-                    },
-                    "tags": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    }
-                  }
+                  "$ref": "#/components/schemas/Todolist"
                 },
                 "examples": {
                   "ayam": {
@@ -348,25 +348,87 @@
         },
         "parameters": [
           {
-            "name": "todoListId",
-            "description": "todoList Id for Update",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "examples": {
-              "todoListId": {
-                "description": "example todoListId 5f9b3b5b5b5b5b5b5b5b5b5b",
-                "value": "5f9b3b5b5b5b5b5b5b5b5b5b"
-              },
-              "jun": {
-                "description": "jiahhhh",
-                "value": "5f9b3b5b5b5b5b5b5b5b5b5b"
-              }
-            }
+            "$ref": "#/components/parameters/todoListId"
           }
         ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "TodoListAuth": {
+        "description": "Auth for TodoList",
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-API-key"
+      }
+    },
+    "parameters": {
+      "todoListId": {
+        "name": "todoListId",
+        "description": "todoList Id for Update",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "examples": {
+          "todoListId": {
+            "description": "example todoListId 5f9b3b5b5b5b5b5b5b5b5b5b",
+            "value": "5f9b3b5b5b5b5b5b5b5b5b5b"
+          },
+          "jun": {
+            "description": "jiahhhh",
+            "value": "5f9b3b5b5b5b5b5b5b5b5b5b"
+          }
+        }
+      }
+    },
+    "schemas": {
+      "Todolist": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "priority": {
+            "type": "number",
+            "format": "int32"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "CreateOrUpdateTodolist": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "priority": {
+            "type": "number",
+            "format": "int32"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "arrayTodoList": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Todolist"
+        }
       }
     }
   }
